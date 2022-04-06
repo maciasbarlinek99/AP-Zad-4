@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Zadanie 4</string>
+    <string name="button_name">Push Me</string>
+    <string name="player1_name">Player 1</string>
+    <string name="player2_name">Player 2</string>
+    <string name="player1_name_edit">Player 1</string>
+    <string name="player2_name_edit">Player 2</string>
+    <string name="button_change_nickname">Zmień nazwę</string>
+    <string name="nickname_edit_hint">Wprowadź nazwę</string>
+    <string name="resultTextInfo">Result</string>
+    <string name="time_result">0 ms</string>
+    <string name="score_player1">0</string>
+    <string name="score_space">:</string>
+    <string name="score_player2">0</string>
+    <string name="circle_description">Circle</string>
+    <string name="start_button">Rozpocznij grę</string>
+</resources>
