@@ -158,10 +158,6 @@ class MainActivity : AppCompatActivity() {
             circleWait.visibility = View.GONE
             circleReady.visibility = View.VISIBLE
         }
-        else if(status == 3) // Koniec gry
-        {
-            // Todo
-        }
     }
 
     private fun startGame(view: View)
@@ -176,6 +172,7 @@ class MainActivity : AppCompatActivity() {
             wynik_gracza2 = 0
             wynik_player1.text = wynik_gracza1.toString()
             wynik_player2.text = wynik_gracza2.toString()
+            timeResult.text = "0 ms"
 
             pushMeButton_player1.visibility = View.VISIBLE
             pushMeButton_player2.visibility = View.VISIBLE
@@ -194,9 +191,12 @@ class MainActivity : AppCompatActivity() {
             object: CountDownTimer((1500..4500).random().toLong(), 1000) {
                 override fun onTick(millisUntilFinished: Long) {}
                 override fun onFinish() {
-                    this@MainActivity.status = 2
-                    this@MainActivity.showCircle()
-                    startTime = System.currentTimeMillis()
+                    if(this@MainActivity.status == 1)
+                    {
+                        this@MainActivity.status = 2
+                        this@MainActivity.showCircle()
+                        startTime = System.currentTimeMillis()
+                    }
                 }
             }.start()
         }
@@ -204,17 +204,36 @@ class MainActivity : AppCompatActivity() {
 
     private fun pushButton(player : Int)
     {
-        if(status == 2)
+        if(status == 1 || status == 2)
         {
-            if(player == 1)
+            if(status == 1)
             {
-                wynik_gracza1++
-                wynik_player1.text = wynik_gracza1.toString()
+                if(player == 1)
+                {
+                    wynik_gracza2++
+                    wynik_player2.text = wynik_gracza2.toString()
+                }
+                else
+                {
+                    wynik_gracza1++
+                    wynik_player1.text = wynik_gracza1.toString()
+                }
+                timeResult.text = "Za wcześnie!"
             }
-            else if(player == 2)
+            else if(status == 2)
             {
-                wynik_gracza2++
-                wynik_player2.text = wynik_gracza2.toString()
+                if(player == 1)
+                {
+                    wynik_gracza1++
+                    wynik_player1.text = wynik_gracza1.toString()
+                }
+                else if(player == 2)
+                {
+                    wynik_gracza2++
+                    wynik_player2.text = wynik_gracza2.toString()
+                }
+                resultTime = System.currentTimeMillis() - startTime
+                timeResult.text = resultTime.toString() + " ms"
             }
             if(wynik_gracza1 == 3 || wynik_gracza2 == 3)
             {
@@ -234,14 +253,15 @@ class MainActivity : AppCompatActivity() {
             {
                 status = 1
                 showCircle()
-                resultTime = System.currentTimeMillis() - startTime
-                timeResult.text = resultTime.toString() + " ms"
                 object: CountDownTimer((1500..4500).random().toLong(), 1) {
                     override fun onTick(millisUntilFinished: Long) {}
                     override fun onFinish() {
-                        this@MainActivity.status = 2
-                        this@MainActivity.showCircle()
-                        startTime = System.currentTimeMillis()
+                        if(this@MainActivity.status == 1)
+                        {
+                            this@MainActivity.status = 2
+                            this@MainActivity.showCircle()
+                            startTime = System.currentTimeMillis()
+                        }
                     }
                 }.start()
             }
